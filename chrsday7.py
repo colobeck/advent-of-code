@@ -3,7 +3,7 @@ from collections import defaultdict
 disk_size = 70000000        # Part 2
 needed_size = 30000000      # Part 2
 
-with open('d7input.txt', 'r') as fh:
+with open('d7short.txt', 'r') as fh:
     lines = [line.strip() for line in fh.readlines()]
 
 cwd = list()                # CWD is a list of directories; treat like stack
@@ -26,11 +26,13 @@ for line in lines:
                     # Otherwise, add directory to stack
                     case other:
                         cwd.append(cmd[-1])
+
+                                           
         
         # if 'ls' result is a directory, create dictionary entry for it
         # key will be ALL of the items in the cwd stack + the new ls result
         case 'dir':
-            dirs["".join(cwd) + cmd[-1]] = 0
+          dirs["".join(cwd) + cmd[-1]] = 0
         # Otherwise, the result is a file. Add its size to the dictionary result
         case other:
             dirs["".join(cwd)] += int(cmd[0])
@@ -40,6 +42,16 @@ for line in lines:
                 dirs["".join(cwd[:-i])] += int(cmd[0])
 
 # Find the sum of directories which are smaller than or equal to 100,00
+
+
+#my_list = [idx for idx, x in enumerate([] * 3)]
+#> print(my_list)
+#> []
+
+my_list = [value for value in dirs.values() if value <= 10**5]
+print (my_list)
+
+
 part_1 = sum(
     value for value in dirs.values() if value <= 10**5
 )
